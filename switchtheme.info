@@ -1,0 +1,3 @@
+; $Id$
+name = Switchtheme
+description = Adds a block to allow users to switch between enabled themes.

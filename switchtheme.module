@@ -8,13 +8,12 @@
 * Implementation of hook_help().
 */
 function switchtheme_help($section) {
-  $output = '';
   switch ($section) {
-    case 'admin/modules#description':
-      $output .= t('Creates a switch theme block to allow users to switch themes on the fly. The block can be enabled by role and the admin can define labels to use for each available theme.');
-      break;
+    case 'admin/settings/modules#description':
+      return t('Creates a switch theme block to allow users to switch themes on the fly. The block can be enabled by role and the admin can define labels to use for each available theme.');
+    case 'admin/settings/switchtheme':
+      return t('Set a label for each enabled theme. This is what will be displayed to the user in the selection box.');   
   }
-  return $output;
 }
 
 /**
@@ -29,7 +28,7 @@ function switchtheme_perm() {
  */
 function switchtheme_menu($may_cache) {
   global $custom_theme, $user;
-
+  $items = array();
   // plays nice with others, if $custom_theme has already been defined, use it
   // otherwise if session info is set use that
   if ($_GET['theme']) {
@@ -43,34 +42,31 @@ function switchtheme_menu($may_cache) {
   if ($may_cache) {
     $items[] = array(
       'path'     => 'admin/settings/switchtheme',
-      'callback' => 'switchtheme_settings',
-      'title'    => t('Switch Theme Settings'),
+      'title'    => t('switchtheme settings'),
+      'description' => t('Set the labels for the themes in the switchtheme block.'),
       'access'   => user_access('administer switch'),
-      'type'     => MENU_NORMAL_ITEM,
+      'callback' => 'drupal_get_form',
+      'callback arguments' => array('switchtheme_admin_settings')
     );
+    return $items;
   }
-  
 }
 
 /**
- *  Implementation of hook_settings() 
+ *  Administration page (menu callback)
  */
-function switchtheme_settings() {
+function switchtheme_admin_settings() {
   
   $options = switchtheme_options();
-  $form = array(
-    '#type' => 'fieldset',
-    '#description' => t('Set a label for each enabled theme. This is what will be displayed to the user in the selection box.'),
-    );
   foreach ($options as $option) {
-    $form['switchtheme_'. $option] = array(
+    $form['switchtheme']['switchtheme_'. $option] = array(
       '#type' => 'textfield',
       '#title' => $option,
       '#default_value' => variable_get('switchtheme_'. $option, $option),
       );
   }
-  return $form;
-  return system_settings_form('switchtheme_settings', $form);
+  
+  return system_settings_form($form);
 
 }
 
@@ -84,8 +80,8 @@ function switchtheme_block($op = 'list', $delta = 0, $edit = array()) {
     return $blocks;
   }
   elseif ($delta == 0 && $op == 'view' && user_access('switch theme')) {
-    $block['content'] = switchtheme_box();
     $block['subject'] = t('Theme');
+    $block['content'] = drupal_get_form('switchtheme_switch_form');
     return $block;
   }
   elseif ($delta == 1 && $op == 'view' && user_access('switch theme')) {
@@ -104,31 +100,33 @@ function switchtheme_display_random_block() {
   foreach ($themes as $key => $theme) {
     $theme->screenshot = dirname($theme->filename) . '/screenshot.png';
     if (file_exists($theme->screenshot)) { //return the first one with a screenie
-      $output = l("<img src=\"$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], NULL, 'theme='.$theme->name, NULL, FALSE, TRUE);
+      $output = l("<img src=\"/$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], NULL, 'theme='.$theme->name, NULL, FALSE, TRUE);
       return $output;
     }
   }
 }
 
 
-/**
- * Create a switch theme selection form
- */
-function switchtheme_box() {
-  global $user, $custom_theme;
+
+
+
+function switchtheme_switch_form() {
+  
+global $user, $custom_theme; 
+  
   $form['custom_theme'] = array(
     '#type' => 'select',
     '#default_value' => !empty($custom_theme) ? $custom_theme : $user->theme,
     '#attributes' => array('title' => t('Change the way this site looks.')),
-    '#options' => switchtheme_select(),
+    '#options' => switchtheme_select()
   );
-  $form['submit'] = array('#type' => 'submit', '#value' => t('Switch'));
-  return drupal_get_form('switchtheme_block_form', $form);
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Switch')); 
+  return $form;
 }
 
 /**
  * Theme the block search form.
- */
+ */ 
 function theme_switchtheme_block_form($form) {
   return '<div class="container-inline">'. form_render($form) .'</div>';
 }
@@ -136,7 +134,7 @@ function theme_switchtheme_block_form($form) {
 /**
  * Process a block switchtheme form submission.
  */
-function switchtheme_block_form_submit($form_id, $form_values) {
+function switchtheme_switch_form_submit($form_id, $form_values) {
   global $user;
   
   // save the setting in the db for logged in users
