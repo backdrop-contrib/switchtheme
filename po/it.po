@@ -1,0 +1,50 @@
+# translation of it_switch_theme.po to italiano
+# Copyright augusto fagioli <augusto@fagioli.biz>, 2006.
+# Generated from file: switchtheme.module,v 1.1 2006/08/19 00:21:15 karens
+
+msgid ""
+msgstr ""
+"Project-Id-Version: 4.7.0\n"
+"POT-Creation-Date: 2006-12-13 09:50+0100\n"
+"PO-Revision-Date: 2006-12-13 10:39+0100\n"
+"Last-Translator: augusto fagioli <augusto@fagioli.biz>\n"
+"Language-Team: Italian (it) <augusto@fagioli.biz>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
+"Plural-Forms:  nplurals=2; plural=n != 1;\n"
+
+
+#: switchtheme.module:14
+msgid "Creates a switch theme block to allow users to switch themes on the fly. The block can be enabled by role and the admin can define labels to use for each available theme."
+msgstr "Crea un blocco di cambio stile grafico che permetta agli utenti di cambiare stile grafico al volo. Il blocco puo' essere abilitato per ruolo e l'amministratore puo' decidere l'etichetta da assegnare a ciascuno stile disponibile."
+
+#: switchtheme.module:47
+msgid "Switch Theme Settings"
+msgstr "Impostazioni per il cambio di stile grafico"
+
+#: switchtheme.module:63
+msgid "Set a label for each enabled theme. This is what will be displayed to the user in the selection box."
+msgstr "Imposta una etichetta per lo stile scelto. L'eticehtta viene esposta all'utente nella finestra di scelta stile."
+
+#: switchtheme.module:82
+msgid "Switch theme form"
+msgstr "Form di cambio Stile Grafico"
+
+#: switchtheme.module:83
+msgid "Random theme"
+msgstr "Uno Stile a caso"
+
+#: switchtheme.module:88
+msgid "Theme"
+msgstr "Stile Grafico"
+
+#: switchtheme.module:122
+msgid "Change the way this site looks."
+msgstr "Cambia lo stile grafico di questo sito"
+
+#: switchtheme.module:125
+msgid "Switch"
+msgstr "Cambia Stile"
+
