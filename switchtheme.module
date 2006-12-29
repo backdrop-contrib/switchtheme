@@ -33,7 +33,7 @@ function switchtheme_menu($may_cache) {
   // otherwise if session info is set use that
   if ($_GET['theme']) {
     $form_values = array('custom_theme' => $_GET['theme']);
-    switchtheme_block_form_submit('', $form_values);
+    switchtheme_switch_form_submit('', $form_values);
   }
   if (isset($_SESSION['custom_theme']) && !isset($custom_theme)) {
     $custom_theme = $_SESSION['custom_theme'];
@@ -105,10 +105,6 @@ function switchtheme_display_random_block() {
     }
   }
 }
-
-
-
-
 
 function switchtheme_switch_form() {
   
