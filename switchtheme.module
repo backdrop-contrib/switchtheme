@@ -32,8 +32,8 @@ function switchtheme_init() {
   // plays nice with others, if $custom_theme has already been defined, use it
   // otherwise if session info is set use that
   if (isset($_GET['theme'])) {
-    $form_values = array('custom_theme' => $_GET['theme']);
-    switchtheme_switch_form_submit('', $form_values);
+    $form['custom_theme'] = array('#value' => $_GET['theme']);
+    drupal_execute('switchtheme_switch_form', $form);
   }
   if (isset($_SESSION['custom_theme']) && !isset($custom_theme)) {
     $custom_theme = $_SESSION['custom_theme'];
