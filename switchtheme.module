@@ -58,6 +58,14 @@ function switchtheme_menu() {
 }
 
 /**
+ * Implementation of hook_theme().
+ */
+function switchtheme_theme() {
+  return array(
+    'switchtheme_block_form' => array('form' => NULL));
+}
+
+/**
  *  Administration page (menu callback)
  */
 function switchtheme_admin_settings() {
@@ -103,9 +111,9 @@ function switchtheme_display_random_block() {
   $themes = list_themes();
   shuffle($themes);
   foreach ($themes as $key => $theme) {
-    $theme->screenshot = dirname($theme->filename) . '/screenshot.png';
+    $theme->screenshot = dirname($theme->filename) .'/screenshot.png';
     if (file_exists($theme->screenshot)) { //return the first one with a screenie
-      $output = l("<img src=\"/$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], NULL, 'theme='.$theme->name, NULL, FALSE, TRUE);
+      $output = l("<img src=\"/$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], NULL, 'theme='. $theme->name, NULL, FALSE, TRUE);
       return $output;
     }
   }
@@ -143,10 +151,12 @@ function switchtheme_switch_form_submit($form, &$form_state) {
     if (user_save($user, array('theme' => $form_state['values']['custom_theme']))) {
       $user->theme = $form_state['values']['custom_theme'];
       unset($_SESSION['custom_theme']);
-    } else {
+    }
+    else {
       $_SESSION['custom_theme'] = $form_state['values']['custom_theme'];
     }
-  } else {
+  }
+  else {
     $_SESSION['custom_theme'] = $form_state['values']['custom_theme'];
   }
 }
