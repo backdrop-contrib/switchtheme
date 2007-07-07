@@ -113,7 +113,7 @@ function switchtheme_display_random_block() {
   foreach ($themes as $key => $theme) {
     $theme->screenshot = dirname($theme->filename) .'/screenshot.png';
     if (file_exists($theme->screenshot)) { //return the first one with a screenie
-      $output = l("<img src=\"/$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], NULL, 'theme='. $theme->name, NULL, FALSE, TRUE);
+      $output = l("<img src=\"/$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], array('query' => 'theme='. $theme->name, 'html' => TRUE));
       return $output;
     }
   }
