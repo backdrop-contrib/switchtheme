@@ -128,7 +128,7 @@ function switchtheme_switch_form() {
     '#attributes' => array('title' => t('Change the way this site looks.')),
     '#options' => switchtheme_select()
   );
-  $form['submit'] = array('#type' => 'submit', '#value' => t('Switch'));
+  $form['submit'] = array('#id'=>'switchtheme-submit', '#type' => 'submit', '#value' => t('Switch'));
   return $form;
 }
 
