@@ -91,6 +91,20 @@ Now your users will have a drop-down selection list they can use to increase
 the font size of their pages.
 
 
+-- CUSTOMIZATION --
+
+* When Switchtheme module is enabled, users are able to switch to a different
+  theme any time they follow a link that includes a query string like in this
+  URL: http://www.example.com/foo/bar?theme=exampletheme
+
+  That means, you can implement specially crafted links into your site or themes
+  which allow users to switch to pre-defined themes.  For example, using
+  Drupal's l() function in page.tpl.php (without code tags):
+<code>
+print l('Red theme', $_GET['q'], array(), 'theme=red');
+</code>
+
+
 -- CONTACT --
 
 Current maintainers:

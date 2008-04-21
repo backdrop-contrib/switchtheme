@@ -6,6 +6,7 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#227246 by sun: Added docs about switching themes via query string.
 #185254 by sun: Fixed themes don't switch for anonymous users.
 #247348 by sun: Fixed Switchtheme alters the default theme of a site.
 
