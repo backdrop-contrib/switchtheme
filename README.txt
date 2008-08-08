@@ -23,23 +23,24 @@ None.
 
 * Install as usual, see http://drupal.org/node/70151 for further information.
 
-* Enable the module in administer >> Modules.
+* Enable the module in Administer >> Modules.
 
 
 -- CONFIGURATION --
 
-* Configure user permissions in administer >> Access control >> Switchtheme.
+* Configure user permissions in Administer >> User management >> Permissions
+  >> Switchtheme.
   Enable the user roles are allowed to see the switchtheme block.  You may only
   want authenticated users to see it, for instance.
 
-* Customize the settings in administer >> Site configuration >> Switchtheme and
+* Customize the settings in Administer >> Site configuration >> Switchtheme and
   enable all themes that you want users to choose from.
 
   The theme names may not be very meaningful to regular users, so the settings
   page allows you to create custom titles to use for each theme.  If no titles
   are setup the original theme name is displayed instead.
 
-* Go to administer >> Site building >> Blocks and make sure that the "select
+* Go to Administer >> Site building >> Blocks and make sure that the "select
   switchtheme" block is enabled, and also enabled in every enabled theme. 
 
 

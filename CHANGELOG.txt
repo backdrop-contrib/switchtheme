@@ -6,6 +6,7 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#292437 by sun: Fixed installation instructions.
 #266479 by gusgsm1: Added Spanish translation.
 
 
