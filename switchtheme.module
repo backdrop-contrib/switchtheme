@@ -34,7 +34,7 @@ function switchtheme_init() {
   drupal_add_css(drupal_get_path('module', 'switchtheme') .'/switchtheme.css');
 
   // If query parameter 'theme' is set, we always assign a new theme.
-  if ($_REQUEST['theme']) {
+  if (isset($_REQUEST['theme'])) {
     $form = array('values' => array('theme' => $_REQUEST['theme']));
     switchtheme_switch_form_submit('', $form);
   }
@@ -51,12 +51,12 @@ function switchtheme_init() {
 function switchtheme_menu() {
   $items = array();
   $items['admin/settings/switchtheme'] = array(
-    'title'    => t('Switchtheme configuration'),
-    'description' => t('Set the labels for the themes in the switchtheme block.'),
-    'access callback'   => 'user_access',
+    'title' => 'Switchtheme configuration',
+    'description' => 'Set the labels for the themes in the switchtheme block.',
     'access arguments' => array('administer switch'),
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('switchtheme_admin_settings')
+    'page arguments' => array('switchtheme_admin_settings'),
+    'file' => 'switchtheme.admin.inc',
   );
   return $items;
 }
@@ -68,22 +68,6 @@ function switchtheme_theme() {
   return array(
     'switchtheme_block_form' => array('form' => NULL),
   );
-}
-
-/**
- * Form builder function for administration page; menu callback.
- */
-function switchtheme_admin_settings() {
-  $options = switchtheme_options();
-  foreach ($options as $option) {
-    $form['switchtheme']['switchtheme_'. $option] = array(
-      '#type' => 'textfield',
-      '#title' => $option,
-      '#default_value' => variable_get('switchtheme_'. $option, $option),
-      );
-  }
-
-  return system_settings_form($form);
 }
 
 /**
