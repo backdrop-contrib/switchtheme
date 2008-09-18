@@ -1,4 +1,4 @@
 ; $Id$
 name = Switchtheme
-description = Adds a block to allow users to switch between enabled themes.
+description = Allows switching the theme in various means.
 core = 6.x

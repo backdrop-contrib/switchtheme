@@ -12,10 +12,14 @@
 function switchtheme_help($path, $arg) {
   switch ($path) {
     case 'admin/settings/modules#description':
-      return t('Creates a switch theme block to allow users to switch themes on the fly. The block can be enabled by role and the admin can define labels to use for each available theme.');
+      return t('Creates a switch theme block to allow users to switch themes on the fly. The block can be enabled by role and the admin can define labels to use for each available theme. It also allows the theme to be changed based on the visitor browser (requires browscap).');
 
     case 'admin/settings/switchtheme':
+    case 'admin/settings/switchtheme/themes':
       return t('Set a label for each enabled theme. This is what will be displayed to the user in the selection box.');
+
+    case 'admin/settings/switchtheme/browser':
+      return t('Change which theme is used for each browser.');
   }
 }
 
@@ -43,6 +47,19 @@ function switchtheme_init() {
   if (isset($_SESSION['custom_theme']) && !isset($custom_theme)) {
     $custom_theme = $_SESSION['custom_theme'];
   }
+
+  if (module_exists('browscap')) {
+    if (variable_get('switchtheme_browser_enabled', FALSE)) {
+      $browser = browscap_get_browser();
+      if (isset($browser['parent'])) {
+        $parent = trim($browser['parent']);
+        $browser_theme = variable_get('switchtheme_browser_'. md5($parent), 'default');
+        if ($browser_theme != 'default') {
+          $custom_theme = $browser_theme;
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -51,13 +68,29 @@ function switchtheme_init() {
 function switchtheme_menu() {
   $items = array();
   $items['admin/settings/switchtheme'] = array(
-    'title' => 'Switchtheme configuration',
-    'description' => 'Set the labels for the themes in the switchtheme block.',
+    'title' => 'Switchtheme',
+    'description' => "Configure settings for the Switchtheme block, as well as change how a visitor's user agent affects which theme is used.",
     'access arguments' => array('administer switch'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('switchtheme_admin_settings'),
     'file' => 'switchtheme.admin.inc',
   );
+  $items['admin/settings/switchtheme/themes'] = array(
+    'title' => 'Themes',
+    'description' => 'Theme display settings for the Switchtheme block.',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+  if (module_exists('browscap')) {
+    $items['admin/settings/switchtheme/browser'] = array(
+      'title' => 'Browser',
+      'description' => "Configuration of switching the theme based on the visitor's browser.",
+      'page arguments' => array('switchtheme_admin_browser_settings'),
+      'access arguments' => array('administer switch'),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 2,
+    );
+  }
   return $items;
 }
 
