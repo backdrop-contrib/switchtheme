@@ -6,6 +6,8 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#273909 by sun: Fixed theme switches after next page load for authenticated
+  users only.
 #249020 by SeanA: Changed default theme names to be capitalized by default.
 #264001 by Rob Loach: Added switching theme based on browser.
 #264001 by Rob Loach, sun: Fixed improper use of t() for menu items and moved

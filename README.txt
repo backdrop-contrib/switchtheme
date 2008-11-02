@@ -33,6 +33,10 @@ None.
   Enable the user roles are allowed to see the switchtheme block.  You may only
   want authenticated users to see it, for instance.
 
+  If the chosen theme should be stored permanently for registered users, please
+  note that you have to grant the "select different theme" permission in Drupal
+  core for (selected) user roles of authenticated users.
+
 * Customize the settings in Administer >> Site configuration >> Switchtheme and
   enable all themes that you want users to choose from.
 
@@ -47,13 +51,13 @@ None.
 -- NOTES --
 
 The module has been designed to defer to themes created by the Sections module
-(http://www.drupal.org/project/section). In other words, if you use the
+(http://drupal.org/project/section).  In other words, if you use the
 sections module to create a special theme for the admin section, the
 switchtheme module will use that theme rather than the individual theme chosen
 by the user.
 
 If you are setting up a lot of themes, you may find the Block Region module 
-(http://www.drupal.org/project/blockregion) to be a helpful way of setting up
+(http://drupal.org/project/blockregion) to be a helpful way of setting up
 blocks to work the same way across many themes.  That will save you the time of
 setting up every block in every theme.
 
