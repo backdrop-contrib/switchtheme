@@ -15,7 +15,7 @@ function switchtheme_admin_settings() {
     $form['switchtheme']['switchtheme_'. $option] = array(
       '#type' => 'textfield',
       '#title' => $option,
-      '#default_value' => variable_get('switchtheme_'. $option, $option),
+      '#default_value' => variable_get('switchtheme_'. $option, drupal_ucfirst($option)),
     );
   }
   return system_settings_form($form);
