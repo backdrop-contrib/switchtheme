@@ -6,6 +6,7 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#484574 by sun: Fixed wrong link to Sections project in README.txt.
 #273909 by sun: Fixed theme switches after next page load for authenticated
   users only.
 #249020 by SeanA: Changed default theme names to be capitalized by default.

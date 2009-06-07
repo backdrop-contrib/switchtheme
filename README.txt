@@ -51,7 +51,7 @@ None.
 -- NOTES --
 
 The module has been designed to defer to themes created by the Sections module
-(http://drupal.org/project/section).  In other words, if you use the
+(http://drupal.org/project/sections).  In other words, if you use the
 sections module to create a special theme for the admin section, the
 switchtheme module will use that theme rather than the individual theme chosen
 by the user.
