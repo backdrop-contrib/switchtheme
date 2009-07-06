@@ -6,6 +6,10 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+
+
+Switchtheme 6.x-1.1, 2009-07-06
+-------------------------------
 #484574 by sun: Fixed wrong link to Sections project in README.txt.
 #273909 by sun: Fixed theme switches after next page load for authenticated
   users only.
