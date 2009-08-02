@@ -6,6 +6,7 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#417120 by dereine: Fixed random theme block displays disabled themes.
 
 
 Switchtheme 6.x-1.1, 2009-07-06

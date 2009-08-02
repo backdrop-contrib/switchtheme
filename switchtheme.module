@@ -135,7 +135,7 @@ function switchtheme_display_random_block() {
   shuffle($themes);
   foreach ($themes as $key => $theme) {
     $theme->screenshot = dirname($theme->filename) .'/screenshot.png';
-    if (file_exists($theme->screenshot)) {
+    if ($theme->status && file_exists($theme->screenshot)) {
       // Return the first theme with a screenshot.
       $output = l("<img src=\"". base_path() ."$theme->screenshot\" alt=\"preview of $theme->name\"/>", $_GET['q'], array('query' => 'theme='. $theme->name, 'html' => TRUE));
       return $output;
