@@ -6,6 +6,7 @@ Switchtheme x.x-x.x, xxxx-xx-xx
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#455796 by sun: Fixed query string allows to select disabled themes.
 #417120 by dereine: Fixed random theme block displays disabled themes.
 
 

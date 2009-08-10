@@ -173,19 +173,18 @@ function theme_switchtheme_block_form($form) {
 function switchtheme_switch_form_submit($form, &$form_state) {
   global $user;
 
-  if ($user->uid > 0) {
-    // Save the setting for authenticated users, if the "select different theme"
-    // permission has been granted.
-    if (user_access('select different theme')) {
-      $user = user_save($user, array('theme' => $form_state['values']['theme']));
-    }
-    // Otherwise save the setting in the session, just like for anonymous users.
-    else {
-      $_SESSION['custom_theme'] = $form_state['values']['theme'];
-    }
+  $themes = switchtheme_options();
+  // Bail out if we do not have a valid theme name.
+  if (empty($form_state['values']['theme']) || !isset($themes[$form_state['values']['theme']])) {
+    return;
   }
+  // Save the setting for authenticated users, if the "select different theme"
+  // permission has been granted.
+  if ($user->uid > 0 && user_access('select different theme')) {
+    $user = user_save($user, array('theme' => $form_state['values']['theme']));
+  }
+  // Otherwise save the setting in the user's session.
   elseif (user_access('switch theme')) {
-    // Save the setting in the session for anonymous users.
     $_SESSION['custom_theme'] = $form_state['values']['theme'];
   }
 }
@@ -196,11 +195,10 @@ function switchtheme_switch_form_submit($form, &$form_state) {
  * @todo Probably should come back here and cache the theme list.
  */
 function switchtheme_options() {
-  $options = array();
   $themes = list_themes();
   foreach ($themes as $name => $attr) {
     if ($attr->status) {
-      $options[] = $attr->name;
+      $options[$attr->name] = $attr->name;
     }
   }
   return $options;
