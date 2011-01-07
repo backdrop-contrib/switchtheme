@@ -1,7 +1,12 @@
 // $Id$
 
-Switchtheme x.x-x.x, xxxx-xx-xx
+Switchtheme 7.x-1.x, xxxx-xx-xx
 -------------------------------
+
+
+Switchtheme 7.x-1.0, 2010-01-07
+-------------------------------
+#871692 by sun, himerus: Ported to Drupal 7.
 
 
 Switchtheme 6.x-1.x, xxxx-xx-xx

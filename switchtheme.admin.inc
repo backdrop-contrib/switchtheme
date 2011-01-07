@@ -3,42 +3,39 @@
 
 /**
  * @file
- * Switchtheme administration functions.
+ * Administrative functionality for Switchtheme.
  */
 
 /**
- * Form builder function for theme settings; menu callback.
+ * Form constructor for theme settings.
  */
-function switchtheme_admin_settings() {
+function switchtheme_admin_settings($form, &$form_state) {
   $options = switchtheme_options();
-  foreach ($options as $option) {
-    $form['switchtheme']['switchtheme_'. $option] = array(
+  foreach ($options as $name => $label) {
+    $form['switchtheme']['switchtheme_' . $name] = array(
       '#type' => 'textfield',
-      '#title' => $option,
-      '#default_value' => variable_get('switchtheme_'. $option, drupal_ucfirst($option)),
+      '#title' => $label,
+      '#default_value' => variable_get('switchtheme_' . $name, $label),
     );
   }
   return system_settings_form($form);
 }
 
 /**
- * Form builder function for browser settings; menu callback.
+ * Form constructor for browser settings.
  */
-function switchtheme_admin_browser_settings() {
-  $form = array();
+function switchtheme_admin_browser_settings($form, &$form_state) {
   $form['switchtheme_browser_enabled'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Browser-based theme switching'),
-    '#description' => t('If enabled, the theme will be switched based on the browser of a visitor.'),
+    '#title' => t('Switch theme based on the browser of the visitor'),
     '#default_value' => variable_get('switchtheme_browser_enabled', FALSE),
   );
-  
-  $themes = switchtheme_select();
-  $themes['default'] = 'Default';
+
+  $themes = array('default' => t('Default'));
+  $themes += switchtheme_options();
   $useragents = array();
-  $result = db_query('SELECT data FROM {browscap}');
-  while ($row = db_fetch_object($result)) {
-    $data = $row->data;
+  $result = db_query('SELECT data FROM {browscap}')->fetchCol();
+  foreach ($result as $data) {
     $data = unserialize($data);
     if (isset($data['parent'])) {
       $useragents[trim($data['parent'])][] = isset($data['platform']) ? $data['platform'] : '';
@@ -51,11 +48,11 @@ function switchtheme_admin_browser_settings() {
     '#collapsed' => FALSE,
   );
   foreach ($useragents as $parent => $platforms) {
-    $form['switchtheme_browser']['switchtheme_browser_'. md5($parent)] = array(
+    $form['switchtheme_browser']['switchtheme_browser_' . md5($parent)] = array(
       '#type' => 'select',
       '#title' => $parent,
       '#options' => $themes,
-      '#default_value' => variable_get('switchtheme_browser_'. md5($parent), 'default'),
+      '#default_value' => variable_get('switchtheme_browser_' . md5($parent), 'default'),
     );
   }
   return system_settings_form($form);

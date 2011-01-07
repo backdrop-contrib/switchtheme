@@ -23,29 +23,25 @@ None.
 
 * Install as usual, see http://drupal.org/node/70151 for further information.
 
-* Enable the module in Administer >> Modules.
+* Enable the module in Administration » Modules.
 
 
 -- CONFIGURATION --
 
-* Configure user permissions in Administer >> User management >> Permissions
-  >> Switchtheme.
-  Enable the user roles are allowed to see the switchtheme block.  You may only
-  want authenticated users to see it, for instance.
+* Configure who should be allowed to use the Switchtheme blocks in
+  Administration » People » Permissions » Switchtheme.
 
-  If the chosen theme should be stored permanently for registered users, please
-  note that you have to grant the "select different theme" permission in Drupal
-  core for (selected) user roles of authenticated users.
+  To permanently store the chosen theme for registered users, grant the
+  "Permanently use a custom theme" permission to selected user roles.
 
-* Customize the settings in Administer >> Site configuration >> Switchtheme and
-  enable all themes that you want users to choose from.
+* Customize the settings in Administration » Configuration » User interface »
+  Switchtheme.
 
   The theme names may not be very meaningful to regular users, so the settings
-  page allows you to create custom titles to use for each theme.  If no titles
-  are setup the original theme name is displayed instead.
+  page allows you to create custom labels to show for each theme.
 
-* Go to Administer >> Site building >> Blocks and make sure that the "select
-  switchtheme" block is enabled, and also enabled in every enabled theme. 
+* Go to Administration » Structure » Blocks and enable the desired Switchtheme
+  block(s), if any. Make sure that it is enabled in all enabled themes.
 
 
 -- NOTES --
@@ -113,7 +109,7 @@ print l('Red theme', $_GET['q'], array(), 'theme=red');
 -- CONTACT --
 
 Current maintainers:
-* Daniel F. Kudwien (sun) - dev@unleashedmind.com
+* Daniel F. Kudwien (sun) - http://drupal.org/user/54136
 
 Previous maintainers:
 * Karen Stevenson (KarenS) - http://drupal.org/user/45874
