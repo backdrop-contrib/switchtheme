@@ -102,7 +102,7 @@ the font size of their pages.
   which allow users to switch to pre-defined themes.  For example, using
   Drupal's l() function in page.tpl.php (without code tags):
 <code>
-print l('Red theme', $_GET['q'], array(), 'theme=red');
+print l('Red theme', $_GET['q'], array('query' => array('theme' => 'red'))); 
 </code>
 
 

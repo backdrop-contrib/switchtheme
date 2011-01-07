@@ -11,6 +11,7 @@ Switchtheme 7.x-1.0, 2010-01-07
 
 Switchtheme 6.x-1.x, xxxx-xx-xx
 -------------------------------
+#986520 by RockSoup: Fixed bogus customization code in README.txt.
 #455796 by sun: Fixed query string allows to select disabled themes.
 #417120 by dereine: Fixed random theme block displays disabled themes.
 
