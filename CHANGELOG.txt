@@ -2,6 +2,7 @@
 
 Switchtheme 7.x-1.x, xxxx-xx-xx
 -------------------------------
+#402348 by gilgabar, sun: Fixed form validation errors with block caching.
 
 
 Switchtheme 7.x-1.0, 2010-01-07

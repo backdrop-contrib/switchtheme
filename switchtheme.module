@@ -146,8 +146,14 @@ function switchtheme_custom_theme($return_single = TRUE) {
  * Implements hook_block_info()
  */
 function switchtheme_block_info() {
-  $blocks['switch_form']['info'] = t('Switch theme');
-  $blocks['switch_random']['info'] = t('Random theme');
+  $blocks['switch_form'] = array(
+    'info' => t('Switch theme'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  $blocks['switch_random'] = array(
+    'info' => t('Random theme'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
   return $blocks;
 }
 
