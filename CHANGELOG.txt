@@ -2,6 +2,7 @@
 
 Switchtheme 7.x-1.x, xxxx-xx-xx
 -------------------------------
+#871692 by sun: Fixed custom theme labels not applied on output.
 #402348 by gilgabar, sun: Fixed form validation errors with block caching.
 
 

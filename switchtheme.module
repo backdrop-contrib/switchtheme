@@ -297,7 +297,7 @@ function switchtheme_options() {
 function switchtheme_select() {
   $options = array();
   foreach (switchtheme_options() as $name => $label) {
-    $options[$name] = variable_get('switchtheme_' . $label, $label);
+    $options[$name] = variable_get('switchtheme_' . $name, $label);
   }
   asort($options);
   return $options;
