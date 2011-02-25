@@ -1,4 +1,3 @@
-; $Id$
 name = Switchtheme
 description = Allows switching the theme in various means.
 core = 7.x
