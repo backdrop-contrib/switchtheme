@@ -1,5 +1,5 @@
-
--- SUMMARY --
+Switchtheme
+===========
 
 Switchtheme allows you to create a block to allow users to switch themes on the
 fly.  The module will present users with a list of all enabled themes and allow
@@ -12,20 +12,13 @@ For a full description visit the project page:
 Bug reports, feature suggestions and latest developments:
   http://drupal.org/project/issues/switchtheme
 
+Installation
+------------
+- Install this module using the official Backdrop CMS instructions at
+https://backdropcms.org/guide/modules
 
--- REQUIREMENTS --
-
-None.
-
-
--- INSTALLATION --
-
-* Install as usual, see http://drupal.org/node/70151 for further information.
-
-* Enable the module in Administration » Modules.
-
-
--- CONFIGURATION --
+Configuration
+-------------
 
 * Configure who should be allowed to use the Switchtheme blocks in
   Administration » People » Permissions » Switchtheme.
@@ -43,21 +36,8 @@ None.
   block(s), if any. Make sure that it is enabled in all enabled themes.
 
 
--- NOTES --
-
-The module has been designed to defer to themes created by the Sections module
-(http://drupal.org/project/sections).  In other words, if you use the
-sections module to create a special theme for the admin section, the
-switchtheme module will use that theme rather than the individual theme chosen
-by the user.
-
-If you are setting up a lot of themes, you may find the Block Region module 
-(http://drupal.org/project/blockregion) to be a helpful way of setting up
-blocks to work the same way across many themes.  That will save you the time of
-setting up every block in every theme.
-
-
--- USAGE --
+Usage
+-----
 
 You can use this module to present users with a small, medium, and large text
 version of your site.  To do that:
@@ -91,7 +71,8 @@ Now your users will have a drop-down selection list they can use to increase
 the font size of their pages.
 
 
--- CUSTOMIZATION --
+Customization
+-------------
 
 * When Switchtheme module is enabled, users are able to switch to a different
   theme any time they follow a link that includes a query string like in this
@@ -104,18 +85,19 @@ the font size of their pages.
 print l('Red theme', $_GET['q'], array('query' => array('theme' => 'red'))); 
 </code>
 
+License
+-------
+This project is GPL v2 software. See the LICENSE.txt file in this directory for
+complete text.
 
--- CONTACT --
+Current Maintainers
+-------------------
+- Joseph Flatt [hosef](https://github.com/hosef)
 
-Current maintainers:
+Credits
+-------
+Ported to Backdrop by Joseph Flatt [hosef](https://github.com/hosef).
+
+Originally developed and maintained for Drupal by:
 * Daniel F. Kudwien (sun) - http://drupal.org/user/54136
-
-Previous maintainers:
 * Karen Stevenson (KarenS) - http://drupal.org/user/45874
-
-This project has been sponsored by:
-* UNLEASHED MIND
-  Specialized in consulting and planning of Drupal powered sites, UNLEASHED
-  MIND offers installation, development, theming, customization, and hosting
-  to get you started. Visit http://www.unleashedmind.com for more information.
-
