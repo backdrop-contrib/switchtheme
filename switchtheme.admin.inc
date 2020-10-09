@@ -10,24 +10,47 @@
  */
 function switchtheme_admin_settings($form, &$form_state) {
   $options = switchtheme_options();
+  $config = config_get('switchtheme.settings', 'switchtheme_name');
+  dpm($config);
   foreach ($options as $name => $label) {
-    $form['switchtheme']['switchtheme_' . $name] = array(
+    $form['switchtheme'][$name] = array(
       '#type' => 'textfield',
       '#title' => $label,
-      '#default_value' => variable_get('switchtheme_' . $name, $label),
+      '#default_value' => (isset($config[$name])) ? $config[$name] : '',
     );
   }
-  return system_settings_form($form);
+
+  $form['save'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save settings'),
+  );
+
+  return $form;
+}
+
+function switchtheme_admin_settings_submit($form, &$form_state) {
+  $options = switchtheme_options();
+  $config = config_get('switchtheme.settings', 'switchtheme_name');
+
+  foreach ($options as $name => $label) {
+    if (!empty($form_state['values'][$name])) {
+      $config[$name] = check_plain($form_state['values'][$name]);
+    }
+  }
+
+  config_set('switchtheme.settings', 'switchtheme_name', $config);
 }
 
 /**
  * Form constructor for browser settings.
  */
 function switchtheme_admin_browser_settings($form, &$form_state) {
+  $config = config('switchtheme.settings');
+  $form['#config'] = 'switchtheme.settings';
   $form['switchtheme_browser_enabled'] = array(
     '#type' => 'checkbox',
     '#title' => t('Switch theme based on the browser of the visitor'),
-    '#default_value' => variable_get('switchtheme_browser_enabled', FALSE),
+    '#default_value' => $config->get('switchtheme_browser_enabled'),
   );
 
   $themes = array('default' => t('Default'));
@@ -51,7 +74,7 @@ function switchtheme_admin_browser_settings($form, &$form_state) {
       '#type' => 'select',
       '#title' => $parent,
       '#options' => $themes,
-      '#default_value' => variable_get('switchtheme_browser_' . md5($parent), 'default'),
+      '#default_value' => $config->get('switchtheme_browser_' . md5($parent)),
     );
   }
   return system_settings_form($form);

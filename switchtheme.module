@@ -49,7 +49,7 @@ function switchtheme_menu() {
   $items['admin/config/user-interface/switchtheme'] = array(
     'title' => 'Switchtheme',
     'description' => 'Configure theme selection settings.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('switchtheme_admin_settings'),
     'access arguments' => array('administer switch'),
     'file' => 'switchtheme.admin.inc',
@@ -64,7 +64,7 @@ function switchtheme_menu() {
     $items['admin/config/user-interface/switchtheme/browser'] = array(
       'title' => 'Browsers',
       'description' => 'Configure automatic theme selection for visitors.',
-      'page callback' => 'drupal_get_form',
+      'page callback' => 'backdrop_get_form',
       'page arguments' => array('switchtheme_admin_browser_settings'),
       'access arguments' => array('administer switch'),
       'file' => 'switchtheme.admin.inc',
@@ -81,7 +81,7 @@ function switchtheme_menu() {
 function switchtheme_init() {
   // Skip maintenance mode and maintenance pages.
   // @see menu_get_custom_theme()
-  if (_menu_site_is_offline(TRUE) || defined('MAINTENANCE_MODE')) {
+  if (_menu_site_status() === MENU_SITE_OFFLINE || defined('MAINTENANCE_MODE')) {
     return;
   }
 
@@ -99,6 +99,16 @@ function switchtheme_init() {
 }
 
 /**
+ * Implements hook_config_info().
+ */
+function switchtheme_config_info() {
+  $prefixes['switchtheme.settings'] = array(
+    'label' => t('Switchtheme settings'),
+    'group' => t('Configuration'),
+  );
+}
+
+/**
  * Implements hook_custom_theme().
  *
  * @param $return_single
@@ -107,6 +117,8 @@ function switchtheme_init() {
  */
 function switchtheme_custom_theme($return_single = TRUE) {
   global $user;
+
+  $config = config('switchtheme.settings');
 
   $custom_theme = array();
 
@@ -119,15 +131,15 @@ function switchtheme_custom_theme($return_single = TRUE) {
     $custom_theme['session'] = $_SESSION['custom_theme'];
   }
   // Check whether the current user has a custom theme assigned.
-  if (!empty($user->theme)) {
-    $custom_theme['user'] = $user->theme;
+  if (!empty($user->data['theme'])) {
+    $custom_theme['user'] = $user->data['theme'];
   }
   // Lastly, check whether a theme can be automatically selected.
-  if (module_exists('browscap') && variable_get('switchtheme_browser_enabled', FALSE)) {
+  if (module_exists('browscap') && $config->get('switchtheme_browser_enabled')) {
     $browser = browscap_get_browser();
     if (isset($browser['parent'])) {
       $parent = trim($browser['parent']);
-      $browser_theme = variable_get('switchtheme_browser_' . md5($parent), 'default');
+      $browser_theme = $config->get('switchtheme_browser_' . md5($parent));
       if ($browser_theme != 'default') {
         $custom_theme['browser'] = $browser_theme;
       }
@@ -142,29 +154,29 @@ function switchtheme_custom_theme($return_single = TRUE) {
 }
 
 /**
- * Implements hook_block_info()
+ * Implements hook_block_info().
  */
 function switchtheme_block_info() {
   $blocks['switch_form'] = array(
     'info' => t('Switch theme'),
-    'cache' => DRUPAL_NO_CACHE,
+    'cache' => BACKDROP_NO_CACHE,
   );
   $blocks['switch_random'] = array(
     'info' => t('Random theme'),
-    'cache' => DRUPAL_NO_CACHE,
+    'cache' => BACKDROP_NO_CACHE,
   );
   return $blocks;
 }
 
 /**
- * Implements hook_block_view()
+ * Implements hook_block_view().
  */
 function switchtheme_block_view($delta = '') {
   if (user_access('switch theme')) {
     switch ($delta) {
       case 'switch_form':
         $block['subject'] = t('Theme');
-        $block['content'] = drupal_get_form('switchtheme_switch_form');
+        $block['content'] = backdrop_get_form('switchtheme_switch_form');
         return $block;
 
       case 'switch_random':
@@ -181,6 +193,7 @@ function switchtheme_block_view($delta = '') {
 function switchtheme_display_random_block() {
   $themes = list_themes();
   shuffle($themes);
+
   foreach ($themes as $key => $theme) {
     if ($theme->status && !empty($theme->info['screenshot'])) {
       // Return the first theme with a screenshot.
@@ -207,7 +220,7 @@ function switchtheme_display_random_block() {
  * Form constructor for theme switcher form.
  */
 function switchtheme_switch_form($form, &$form_state) {
-  global $user, $theme_key;
+  global $theme_key;
 
   $options = switchtheme_select();
   // Nothing to switch if there is only one theme.
@@ -264,11 +277,10 @@ function switchtheme_switch_form_submit($form, &$form_state) {
 
   // Save the setting for authenticated users, if the "select different theme"
   // permission has been granted.
-  if ($user->uid > 0 && user_access('select different theme')) {
+  if ($user->uid == 0 || user_access('select different theme')) {
     $account = user_load($user->uid);
-    user_save($account, array(
-      'theme' => $form_state['values']['theme'],
-    ));
+    $account->data['theme'] = $form_state['values']['theme'];
+    user_save($account);
   }
   // Otherwise save the setting in the user's session.
   elseif (user_access('switch theme')) {
@@ -295,9 +307,17 @@ function switchtheme_options() {
  */
 function switchtheme_select() {
   $options = array();
+
   foreach (switchtheme_options() as $name => $label) {
-    $options[$name] = variable_get('switchtheme_' . $name, $label);
+    $settings = config_get('switchtheme.settings', 'switchtheme_name');
+    if (isset($settings[$name])) {
+      $options[$name] = $settings[$name];
+    }
+    else {
+      $options[$name] = $label;
+    }
   }
+
   asort($options);
   return $options;
 }
