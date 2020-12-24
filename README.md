@@ -1,5 +1,8 @@
-Switchtheme
+Switchtheme - Modified to add a UL list of themes
 ===========
+
+Todo: update this readme to include these update 
+notes in a better place
 
 Switchtheme allows you to create a block to allow users to switch themes on the
 fly.  The module will present users with a list of all enabled themes and allow
