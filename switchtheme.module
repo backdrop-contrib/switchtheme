@@ -186,7 +186,7 @@ function switchtheme_block_view($delta = '') {
         return $block;
 
         case 'switch_ulist':
-          $block['subject'] = t('Theme Block as Unordered List');
+          $block['subject'] = t('Available Themes');
           $block['content'] = switchtheme_display_ulist_block();
           return $block;
   
@@ -199,7 +199,7 @@ function switchtheme_block_view($delta = '') {
 }
 
 /**
- * returns a list of active themes to switch to.
+ * returns a ul list of active themes to switch to.
  */
 
 function switchtheme_display_ulist_block() {
@@ -209,7 +209,8 @@ function switchtheme_display_ulist_block() {
   $returnHTML="<ul>\n";
 
   global $base_root;
-  $current_url = $base_root . request_uri();
+  // $current_url = $base_root . request_uri();
+  $current_url = url(current_path(), array('absolute' => TRUE));
   // dpm("current url: " . $current_url);
 
 
