@@ -210,56 +210,27 @@ function switchtheme_display_ulist_block() {
 
   global $base_root;
   $current_url = $base_root . request_uri();
-  dpm("current url: " . $current_url);
+  // dpm("current url: " . $current_url);
 
 
   foreach ($themes as $key => $theme) {
     
-    if ($theme->status) {
-      // dpm("--> " . $theme->name . "!");
+    if ($theme->status) { // if enabled
+      // dpm($theme->name);
       $enabledThemes[] = $theme->name;
-      $returnHTML.="<li><a href=\"" . $current_url . "\">" . $theme->name . "</a></li>\n";
-    } else {
-      $disabledThemes[] = $theme->name;
-
-    }
- 
-
-    if ($theme->status && !empty($theme->info['screenshot'])) {
-      // Return the first theme with a screenshot.
-      $build['theme'] = array(
-        '#type' => 'link',
-        '#title' => theme('image', array(
-          'path' => $theme->info['screenshot'],
-          'alt' => t('Preview of @theme', array('@theme' => $theme->name)),
-        )),
-        '#href' => $_GET['q'],
-        '#options' => array(
-          'query' => array(
-            'theme' => $theme->name,
-          ),
-          'html' => TRUE,
-        ),
-      );
-      // ddl("What is in $build variable?");
-      // ddl($build);
-      // dpm($build);
-      // return $build;
-    }
+      $returnHTML.="<li><a href=\"" 
+      . $current_url . "?theme=" . $theme->name .  "\">" 
+      . $theme->name
+      . "</a></li>\n";
+    } 
   }
 
-  // dpm("These themes are disabled: ");
-  // dpm($disabledThemes);
-  dpm("These themes are enabled: ");
-  dpm($enabledThemes);
+  // dpm("These themes are enabled: ");
+  // dpm($enabledThemes);
 
   $returnHTML.="</ul>\n";
-  dpm($returnHTML);
+  // dpm($returnHTML);
    return $returnHTML;
-  // dpm($build);
-  // dpm("There were " . sizeof($disabledThemes) . " disabled themes");
-  // return $themes;
-
 }
 
 /**
