@@ -1,16 +1,13 @@
-Switchtheme - Modified to add a UL list of themes
+Switchtheme
 ===========
 
-Todo: update this readme to include these update 
-notes in a better place
-
 Switchtheme allows you to create a block to allow users to switch themes on the
-fly.  The module will present users with a list of all enabled themes and allow
-them to choose between them. Anonymous users have their choices tracked in a
+fly.  The module presents a list of all enabled themes and allows the user
+to choose among them. Anonymous users have their choices tracked in a
 session variable.  For logged in users, the user record is updated with their
 choice so that their last selection will stay the same the next time they log in. 
 
-For a full description visit the project page:
+For a full description visit the Drupal project page:
   http://drupal.org/project/switchtheme
 Bug reports, feature suggestions and latest developments:
   http://drupal.org/project/issues/switchtheme
@@ -100,6 +97,7 @@ Current Maintainers
 Credits
 -------
 Ported to Backdrop by Joseph Flatt [hosef](https://github.com/hosef).
+Theme display as unordered list added by Luke McCormick [cellear](https://github.com/cellear)
 
 Originally developed and maintained for Drupal by:
 * Daniel F. Kudwien (sun) - http://drupal.org/user/54136
