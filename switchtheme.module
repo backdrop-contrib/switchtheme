@@ -1,10 +1,11 @@
-<?php
+<?php 
 
 /**
  * @file
- * Adds two blocks with user theme switchers
- *  1) The original style, which is a dropdown list
- *  2) and as an unordered list
+ * Adds three blocks with user theme switchers
+ *  1) A dropdown list of available themes
+ *  2) An unordered list of available themes
+ *  3) A ramdon pick of available themes
  */
 
 /**
@@ -160,15 +161,17 @@ function switchtheme_custom_theme($return_single = TRUE) {
  */
 function switchtheme_block_info() {
   $blocks['switch_form'] = array(
-    'info' => t('Switch theme'),
+    'info' => t('Switchtheme Form'),
     'cache' => BACKDROP_NO_CACHE,
   );
-  $blocks['switch_ulist'] = array(
-    'info' => t('Switch theme as list'),
+
+  $blocks['switch_itemlist'] = array(
+    'info' => t('Switchtheme List of Links'),
     'cache' => BACKDROP_NO_CACHE,
   );
+
   $blocks['switch_random'] = array(
-    'info' => t('Random theme'),
+    'info' => t('Switchtheme Random theme'),
     'cache' => BACKDROP_NO_CACHE,
   );
   return $blocks;
@@ -184,12 +187,12 @@ function switchtheme_block_view($delta = '') {
         $block['subject'] = t('Theme');
         $block['content'] = backdrop_get_form('switchtheme_switch_form');
         return $block;
-
-        case 'switch_ulist':
-          $block['subject'] = t('Available Themes');
-          $block['content'] = switchtheme_display_ulist_block();
-          return $block;
   
+      case 'switch_itemlist':
+        $block['subject'] = t('Available Themes');
+        $block['content'] = switchtheme_return_itemlist_block();
+        return $block;
+
       case 'switch_random':
         $block['subject'] = t('Random theme');
         $block['content'] = switchtheme_display_random_block();
@@ -199,27 +202,31 @@ function switchtheme_block_view($delta = '') {
 }
 
 /**
- * returns a ul list of active themes to switch to.
+ * returns an unordered list of active themes to switch to.
  */
 
-function switchtheme_display_ulist_block() {
+function switchtheme_return_itemlist_block() {
   $themes = list_themes();
   $enabledThemes = []; 
-  $returnHTML="<ul>\n";
 
-  global $base_root;
   $current_url = url(current_path(), array('absolute' => TRUE));
   foreach ($themes as $key => $theme) {
     if ($theme->status) { // if enabled
-      $enabledThemes[] = $theme->name;
-      $returnHTML.="<li><a href=\"" 
-      . $current_url . "?theme=" . $theme->name .  "\">" 
-      . $theme->name
-      . "</a></li>\n";
+      $items[] = array(
+        'data' => l($theme->name, $current_url . '?theme=' . $theme->name),
+      );
     } 
   }
-  $returnHTML.="</ul>\n";
-  return $returnHTML;
+
+  $content = [
+    '#theme' => 'item_list',
+    '#list_type' => 'ul',
+    '#items' => $items,
+    '#attributes' => ['class' => 'mylist'],
+    '#wrapper_attributes' => ['class' => 'container'],
+  ]; 
+
+  return $content;
 }
 
 /**
